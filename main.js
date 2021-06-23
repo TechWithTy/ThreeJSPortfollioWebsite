@@ -1,6 +1,5 @@
-import './style.css';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import './style.css';
 
 // Setup
 
@@ -26,9 +25,18 @@ renderer.render(scene, camera);
 
 // Torus
 
-const geometry = new THREE.TorusGeometry(7, 3, 16, 100);
-const material = new THREE.MeshStandardMaterial({ color: 0x808080 });
+const geometry = new THREE.TorusGeometry(7, 1, 16, 100);
+const ringTexture = new THREE.TextureLoader().load('ring_texture.jpg  ');
+const ringTextureNormal = new THREE.TextureLoader().load('normal.jpg  ');
+
+const material = new THREE.MeshStandardMaterial({
+  color: 0x808080,
+  map: ringTexture,
+  normalMap: ringTextureNormal,
+});
+
 const torus = new THREE.Mesh(geometry, material);
+
 
 scene.add(torus);
 
@@ -50,12 +58,18 @@ scene.add(pointLight, ambientLight);
 
 function addStar() {
   const geometry = new THREE.OctahedronGeometry(5, 0);
-  const material = new THREE.MeshStandardMaterial({ color: 0x808080 });
+   const starTexture = new THREE.TextureLoader().load('shiny_texture.jfif  ');
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x808080,
+    map: starTexture
+  });
+ 
+
   const star = new THREE.Mesh(geometry, material);
 
   const [x, y, z] = Array(3)
     .fill()
-    .map(() => THREE.MathUtils.randFloatSpread(200));
+    .map(() => THREE.MathUtils.randFloatSpread(300));
 
   star.position.set(x, y, z);
   scene.add(star);
@@ -97,7 +111,7 @@ scene.add(moon);
 moon.position.z = 30;
 moon.position.setX(-10);
 
-ty.position.z = -3;
+ty.position.z = -5;
 ty.position.x = 0;
 
 // Scroll Animation
@@ -108,8 +122,8 @@ function moveCamera() {
   moon.rotation.y += 0.075;
   moon.rotation.z += 0.05;
 
-  ty.rotation.y += 0.01;
-  ty.rotation.z += 0.01;
+  ty.rotation.y += 0.05;
+  ty.rotation.z += 0.05;
 
   camera.position.z = t * -0.01;
   camera.position.x = t * -0.0002;
