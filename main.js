@@ -50,9 +50,9 @@ scene.add(pointLight, ambientLight);
 
 // Helpers
 
-// const lightHelper = new THREE.PointLightHelper(pointLight)
-// const gridHelper = new THREE.GridHelper(200, 50);
-// scene.add(lightHelper, gridHelper)
+const lightHelper = new THREE.PointLightHelper(pointLight)
+const gridHelper = new THREE.GridHelper(200, 50);
+scene.add(lightHelper, gridHelper)
 
 // const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -85,10 +85,11 @@ scene.background = spaceTexture;
 // Avatar
 
 const tyTexture = new THREE.TextureLoader().load('ty.jpg');
+const tyTextureNormal = new THREE.TextureLoader().load('sphere_texture.jfif');
 
 const ty = new THREE.Mesh(
-  new THREE.BoxGeometry(3, 3, 3),
-  new THREE.MeshBasicMaterial({ map: tyTexture })
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({ map: tyTexture, normalMap: tyTextureNormal   })
 );
 
 scene.add(ty);
